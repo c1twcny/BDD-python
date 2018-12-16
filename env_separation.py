@@ -6,7 +6,7 @@
 #
 # Class file: asset.py
 # ---------------------------------------------------
-
+from pytest_bdd import *
 from behave import *
 from hamcrest import *
 from asset import AssetEnvironment, AssetRiskFactor, AssetTier

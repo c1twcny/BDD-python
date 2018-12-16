@@ -5,6 +5,7 @@
 # env_separation.feature
 # tier_jump.feature
 # ----------------------------------------------------
+from pytest_bdd import *
 from hamcrest import *
 import unittest
 
@@ -75,4 +76,18 @@ class AssetRiskFactor():
 class AssetTier():
     def network_tier(self, src_tier, dst_tier):
         self.src_tier, self.dst_tier = src_tier, dst_tier
+        print('Source1: %s; Destination1: %s' % (self.src_tier, self.dst_tier))
         assert_that(all_of(src_tier, dst_tier), is_not(None))
+        return(self.src_tier, self.dst_tier)
+
+    def tier_jump(self, outcome):
+        self.outcome = outcome
+        print('Source2: %s; Destination2: %s' % (self.src_tier, self.dst_tier))
+        if int(self.src_tier) >= int(self.dst_tier): # All outbound flows
+            self.outcome = 'permitted'
+        elif (int(self.src_tier) < int(self.dst_tier)) and (abs(int(self.src_tier) - int(self.src_tier))) <= 1:
+            self.outcome = 'permitted'
+        else:
+            self.outcome = 'denied'
+
+        return(self.outcome)
